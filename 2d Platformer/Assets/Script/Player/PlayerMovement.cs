@@ -116,9 +116,13 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("jump");
 
             if (coll.onGround)
+            {
                 Jump(Vector2.up, false);
+            }
             if (coll.onWall && !coll.onGround)
+            {
                 WallJump();
+            }              
         }
 
         if (Input.GetButtonDown("Fire1") && !hasDashed)
@@ -169,9 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash(float x, float y)
         // get direcrion from horizontal and verticle axis and add it velocity to rigibody
-
-    {  
-    
+    {    
         hasDashed = true;
 
         anim.SetTrigger("dash");
@@ -185,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DashWait()
     {
-        FindObjectOfType<DashEffect>().ShowGhost();
+        FindObjectOfType<DashEffect>().ShowGhost();//creat follow ghost effect
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
 
@@ -267,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb2d.velocity = Vector2.Lerp(rb2d.velocity, (new Vector2(dir.x * speed, rb2d.velocity.y)), wallJumpLerp * Time.deltaTime);
-            //player can still move after all jump but not much
+            //limited movement of player after wall jump 
         }
     }
 
