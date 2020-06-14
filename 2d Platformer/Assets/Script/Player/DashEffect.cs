@@ -22,16 +22,24 @@ public class DashEffect : MonoBehaviour
     }
 
     public void ShowGhost()
-    {
+    {   // create sequencer using DoTween and handle multiple of sequencer
         Sequence s = DOTween.Sequence();
-
+        
         for (int i = 0; i < DashParent.childCount; i++)
         {
             Transform currentGhost = DashParent.GetChild(i);
-            s.AppendCallback(() => currentGhost.position = move.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = anim.spriteRenderer.flipX);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = anim.spriteRenderer.sprite);
-            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(trailColor, 0));
+            s.AppendCallback(() => currentGhost.position = 
+            move.transform.position);
+
+            s.AppendCallback(() => currentGhost.GetComponent
+                <SpriteRenderer>().flipX = anim.spriteRenderer.flipX);
+
+            s.AppendCallback(() => currentGhost.GetComponent
+                <SpriteRenderer>().sprite = anim.spriteRenderer.sprite);
+
+            s.Append(currentGhost.GetComponent
+                <SpriteRenderer>().material.DOColor(trailColor, 0));
+
             s.AppendCallback(() => FadeSprite(currentGhost));
             s.AppendInterval(DashInterval);
         }

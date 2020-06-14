@@ -9,10 +9,12 @@ public class EndLevel : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 1f;
+        WinScreen.SetActive(false);
+        GameplayUI.SetActive(true);
     }
-    void OnTriggerEnter(Collider hitCollider)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hitCollider.tag == "Finish")
+        if (collision.tag == "Player")
         {
             WinScreen.SetActive(true);
             GameplayUI.SetActive(false);

@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public int side = 1;
 
     [Space]
-    [Header("Polish")]
+    [Header("Effect")]
     public ParticleSystem dashParticle;
     public ParticleSystem jumpParticle;
     public ParticleSystem wallJumpParticle;
@@ -157,8 +157,6 @@ public class PlayerMovement : MonoBehaviour
             side = -1;
             anim.Flip(side);
         }
-
-
     }
 
     void GroundTouch()
@@ -172,7 +170,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Dash(float x, float y)
-        // get direcrion from horizontal and verticle axis and add it velocity to rigibody
+        /* get direcrion from horizontal and verticle axis 
+           and add it velocity to rigibody*/
     {    
         hasDashed = true;
 
@@ -188,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DashWait()
     {
         FindObjectOfType<DashEffect>().ShowGhost();//creat follow ghost effect
-        StartCoroutine(GroundDash());
+        StartCoroutine(GroundDash());//start count time to dash again
         DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
 
         dashParticle.Play();
@@ -220,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
             side *= -1;
             anim.Flip(side);
         }
-
+        //pervent player for repetly use wall jump
         StopCoroutine(DisableMovement(0));
         StartCoroutine(DisableMovement(.1f));
 
@@ -229,6 +228,12 @@ public class PlayerMovement : MonoBehaviour
         Jump((Vector2.up / 1.5f + wallDir / 1.5f), true);
 
         wallJumped = true;
+    }
+    IEnumerator DisableMovement(float time)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(time);
+        canMove = true;
     }
 
     private void WallSlide()
@@ -240,7 +245,8 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         bool pushingWall = false;
-        if ((rb2d.velocity.x > 0 && coll.onRightWall) || (rb2d.velocity.x < 0 && coll.onLeftWall))
+        if ((rb2d.velocity.x > 0 && coll.onRightWall) 
+            || (rb2d.velocity.x < 0 && coll.onLeftWall))
         {
             pushingWall = true;
         }
@@ -268,8 +274,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb2d.velocity = Vector2.Lerp(rb2d.velocity, (new Vector2(dir.x * speed, rb2d.velocity.y)), wallJumpLerp * Time.deltaTime);
-            //limited movement of player after wall jump 
+            rb2d.velocity = Vector2.Lerp(rb2d.velocity, (new Vector2(dir.x * speed, rb2d.velocity.y)), wallJumpLerp * Time.deltaTime);  
         }
     }
 
@@ -282,13 +287,6 @@ public class PlayerMovement : MonoBehaviour
         rb2d.velocity += dir * jumpForce;
 
         particle.Play();
-    }
-
-    IEnumerator DisableMovement(float time)//pervent player for repetly use wall jump
-    {
-        canMove = false;
-        yield return new WaitForSeconds(time);
-        canMove = true;
     }
 
     void RigidbodyDrag(float x)
