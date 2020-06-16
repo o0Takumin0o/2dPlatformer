@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {   //put in player game obj
-    private CollisionCheck coll;
+    private CollisionCheck collisionCheck;
     [HideInInspector]
     public Rigidbody2D rb2d;
     private AnimationScript anim;
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coll = GetComponent<CollisionCheck>();
+        collisionCheck = GetComponent<CollisionCheck>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationScript>();
     }
@@ -62,22 +62,24 @@ public class PlayerMovement : MonoBehaviour
         Walk(dir);
         anim.SetHorizontalMovement(x, y, rb2d.velocity.y);
 
-        if (coll.onWall && Input.GetButton("Fire3") && canMove)
+        if (collisionCheck.onWall && Input.GetButton("Fire3") && canMove)
             //press fire3(Shift) to grab on wall and stop sliding down
         {
-            if (side != coll.wallSide)
+            if (side != collisionCheck.wallSide)
+            {
                 anim.Flip(side * -1);
+            }
             wallGrab = true;
             wallSlide = false;
         }
 
-        if (Input.GetButtonUp("Fire3") || !coll.onWall || !canMove)
+        if (Input.GetButtonUp("Fire3") || !collisionCheck.onWall || !canMove)
         {
             wallGrab = false;
             wallSlide = false;
         }
 
-        if (coll.onGround && !isDashing)
+        if (collisionCheck.onGround && !isDashing)
         {
             wallJumped = false;
             GetComponent<Jumping>().enabled = true;
@@ -87,7 +89,9 @@ public class PlayerMovement : MonoBehaviour
         {
             rb2d.gravityScale = 0;
             if (x > .2f || x < -.2f)
+            {
                 rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            }
 
             float speedModifier = y > 0 ? .5f : 1;
 
@@ -98,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             rb2d.gravityScale = 3;
         }
 
-        if (coll.onWall && !coll.onGround)
+        if (collisionCheck.onWall && !collisionCheck.onGround)
             // when on wall and not on the ground slide down
         {
             if (x != 0 && !wallGrab)
@@ -108,18 +112,20 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!coll.onWall || coll.onGround)
+        if (!collisionCheck.onWall || collisionCheck.onGround)
+        {
             wallSlide = false;
+        }
 
         if (Input.GetButtonDown("Jump"))
         {
             anim.SetTrigger("jump");
 
-            if (coll.onGround)
+            if (collisionCheck.onGround)
             {
                 Jump(Vector2.up, false);
             }
-            if (coll.onWall && !coll.onGround)
+            if (collisionCheck.onWall && !collisionCheck.onGround)
             {
                 WallJump();
             }              
@@ -128,16 +134,18 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !hasDashed)
         {
             if (xRaw != 0 || yRaw != 0)
+            {
                 Dash(xRaw, yRaw);
+            }
         }
 
-        if (coll.onGround && !groundTouch)
+        if (collisionCheck.onGround && !groundTouch)
         {
             GroundTouch();
             groundTouch = true;
         }
 
-        if (!coll.onGround && groundTouch)
+        if (!collisionCheck.onGround && groundTouch)
         {
             groundTouch = false;
         }
@@ -145,7 +153,9 @@ public class PlayerMovement : MonoBehaviour
         WallParticle(y);
 
         if (wallGrab || wallSlide || !canMove)
+        {
             return;
+        }
 
         if (x > 0)
         {
@@ -208,13 +218,15 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator GroundDash()
     {
         yield return new WaitForSeconds(.15f);
-        if (coll.onGround)
+        if (collisionCheck.onGround)
+        {
             hasDashed = false;
+        }
     }
 
     private void WallJump()
     {
-        if ((side == 1 && coll.onRightWall) || side == -1 && !coll.onRightWall)
+        if ((side == 1 && collisionCheck.onRightWall) || side == -1 && !collisionCheck.onRightWall)
         {
             side *= -1;
             anim.Flip(side);
@@ -223,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine(DisableMovement(0));
         StartCoroutine(DisableMovement(.1f));
 
-        Vector2 wallDir = coll.onRightWall ? Vector2.left : Vector2.right;
+        Vector2 wallDir = collisionCheck.onRightWall ? Vector2.left : Vector2.right;
 
         Jump((Vector2.up / 1.5f + wallDir / 1.5f), true);
 
@@ -238,15 +250,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        if (coll.wallSide != side)
+        if (collisionCheck.wallSide != side)
             anim.Flip(side * -1);
 
         if (!canMove)
             return;
 
         bool pushingWall = false;
-        if ((rb2d.velocity.x > 0 && coll.onRightWall) 
-            || (rb2d.velocity.x < 0 && coll.onLeftWall))
+        if ((rb2d.velocity.x > 0 && collisionCheck.onRightWall) 
+            || (rb2d.velocity.x < 0 && collisionCheck.onLeftWall))
         {
             pushingWall = true;
         }
@@ -311,7 +323,7 @@ public class PlayerMovement : MonoBehaviour
 
     int ParticleSide()
     {
-        int particleSide = coll.onRightWall ? 1 : -1;
+        int particleSide = collisionCheck.onRightWall ? 1 : -1;
         return particleSide;
     }
 }

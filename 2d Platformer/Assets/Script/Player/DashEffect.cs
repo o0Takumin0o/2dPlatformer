@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class DashEffect : MonoBehaviour
 {
-    private PlayerMovement move;
+    private PlayerMovement playerMovement;
     private AnimationScript anim;
     private SpriteRenderer sr;
     public Transform DashParent;
@@ -17,7 +17,7 @@ public class DashEffect : MonoBehaviour
     private void Start()
     {
         anim = FindObjectOfType<AnimationScript>();
-        move = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
     }
 
@@ -28,8 +28,8 @@ public class DashEffect : MonoBehaviour
         for (int i = 0; i < DashParent.childCount; i++)
         {
             Transform currentGhost = DashParent.GetChild(i);
-            s.AppendCallback(() => currentGhost.position = 
-            move.transform.position);
+            s.AppendCallback(() => currentGhost.position =
+            playerMovement.transform.position);
 
             s.AppendCallback(() => currentGhost.GetComponent
                 <SpriteRenderer>().flipX = anim.spriteRenderer.flipX);

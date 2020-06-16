@@ -6,7 +6,7 @@ public class AnimationScript : MonoBehaviour
 {
     //put in player sprite
     private Animator anim;
-    private PlayerMovement move;
+    private PlayerMovement playerMovement;
     private CollisionCheck coll;
     [HideInInspector]
     public SpriteRenderer spriteRenderer;
@@ -15,7 +15,7 @@ public class AnimationScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         coll = GetComponentInParent<CollisionCheck>();
-        move = GetComponentInParent<PlayerMovement>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -24,10 +24,10 @@ public class AnimationScript : MonoBehaviour
         anim.SetBool("onGround", coll.onGround);
         anim.SetBool("onWall", coll.onWall);
         anim.SetBool("onRightWall", coll.onRightWall);
-        anim.SetBool("wallGrab", move.wallGrab);
-        anim.SetBool("wallSlide", move.wallSlide);
-        anim.SetBool("canMove", move.canMove);
-        anim.SetBool("isDashing", move.isDashing);
+        anim.SetBool("wallGrab", playerMovement.wallGrab);
+        anim.SetBool("wallSlide", playerMovement.wallSlide);
+        anim.SetBool("canMove", playerMovement.canMove);
+        anim.SetBool("isDashing", playerMovement.isDashing);
     }
 
     public void SetHorizontalMovement(float x,float y, float yVel)
@@ -44,12 +44,14 @@ public class AnimationScript : MonoBehaviour
     }
 
     public void Flip(int side)
-    {
+    {   //flip character
 
-        if (move.wallGrab || move.wallSlide)
+        if (playerMovement.wallGrab || playerMovement.wallSlide)
         {
             if (side == -1 && spriteRenderer.flipX)
+            {
                 return;
+            }
 
             if (side == 1 && !spriteRenderer.flipX)
             {
