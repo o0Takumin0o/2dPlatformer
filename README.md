@@ -1,5 +1,5 @@
 # 2dPlatformer
-![](Images/Zorb%20ball.png)  
+![](Images/2DPlatformer.png)  
 Type game : 2D platformer  
 Program : Unity  
 Language : C#  
