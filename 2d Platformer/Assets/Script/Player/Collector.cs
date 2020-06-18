@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Collector : MonoBehaviour
-{
+{//Update point when player hit "Gem" object.  
     Rigidbody2D rb2d;
     public SaveData saveData;
     public SoundFx soundFX;
@@ -16,7 +16,6 @@ public class Collector : MonoBehaviour
             saveData.UpdatePointCount();
             Destroy(other.gameObject);
             soundFX.Pickup();
-        }
-        
+        }   
     }
 }

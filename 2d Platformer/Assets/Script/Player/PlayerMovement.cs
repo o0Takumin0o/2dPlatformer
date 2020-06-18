@@ -251,10 +251,14 @@ public class PlayerMovement : MonoBehaviour
     private void WallSlide()
     {
         if (collisionCheck.wallSide != side)
+        {
             anim.Flip(side * -1);
+        }
 
         if (!canMove)
+        {
             return;
+        }
 
         bool pushingWall = false;
         if ((rb2d.velocity.x > 0 && collisionCheck.onRightWall) 
