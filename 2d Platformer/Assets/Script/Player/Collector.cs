@@ -13,7 +13,7 @@ public class Collector : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Gem"))
         {
-            saveData.UpdateCoinCount();
+            saveData.UpdatePointCount();
             Destroy(other.gameObject);
             soundFX.Pickup();
         }

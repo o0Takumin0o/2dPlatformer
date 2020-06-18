@@ -33,20 +33,20 @@ public class SaveData : MonoBehaviour
             FileStream fs = new FileStream(dataFilePath, FileMode.Open);
             data = (GameData)Bf.Deserialize(fs);//acces data decode
             fs.Close();
-            Debug.Log("Number of Coin" + data.coinCount);
-            txtCoinCount.text = data.coinCount.ToString();
+            Debug.Log("Number of Coin" + data.pointCount);
+            txtCoinCount.text = data.pointCount.ToString();
         }
     }
     
-    public void UpdateCoinCount()
+    public void UpdatePointCount()
     {
-        data.coinCount += 1;
-        txtCoinCount.text = data.coinCount.ToString();
+        data.pointCount += 1;
+        txtCoinCount.text = data.pointCount.ToString();
     }
-    public void ResetCoinCount()
+    public void ResetPointCount()
     {
-        data.coinCount = 0;
-        txtCoinCount.text = data.coinCount.ToString();
+        data.pointCount = 0;
+        txtCoinCount.text = data.pointCount.ToString();
         Debug.Log("Data Save");
         saveData();
     }

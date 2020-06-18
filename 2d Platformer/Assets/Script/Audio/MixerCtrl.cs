@@ -23,9 +23,9 @@ public class MixerCtrl : MonoBehaviour
     }
 
     void Start()
-    {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 0);
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 0);
+    {   //use this when going to make volume slider
+        //musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 0);
+        //sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 0);
     }
     
     private void OnDisable()//only save when exit scene

@@ -7,7 +7,7 @@ using System;
 
 public class GameData 
 {
-	public int coinCount;
+	public int pointCount;
 	public int timer;
 	public int level;
 	public int checkpoint;

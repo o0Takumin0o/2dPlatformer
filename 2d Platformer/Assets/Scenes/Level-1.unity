@@ -83671,7 +83671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    coinCount: 0
+    pointCount: 0
     timer: 0
     level: 0
     checkpoint: 0
@@ -84421,6 +84421,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2078277648}
+    - target: {fileID: 7581215284930265621, guid: 287ec69ffd9cf5a46adf7084135c756c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdatePointCount
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 287ec69ffd9cf5a46adf7084135c756c, type: 3}
 --- !u!1001 &7759455203255846374
