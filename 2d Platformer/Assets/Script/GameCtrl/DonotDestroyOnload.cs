@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DonotDestroyOnload : MonoBehaviour
 {
-    
     private static DonotDestroyOnload instance = null;
     private static DonotDestroyOnload Instance
     {

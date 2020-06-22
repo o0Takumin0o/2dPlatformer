@@ -22,7 +22,6 @@ public class CollisionCheck : MonoBehaviour
     public Vector2 bottomOffset, rightOffset, leftOffset;
     private Color debugCollisionColor = Color.red;
 
-   
     void Update()
     { //use overlap circle function to check is player is on the wall or ground
         onGround = Physics2D.OverlapCircle((Vector2)transform.position 

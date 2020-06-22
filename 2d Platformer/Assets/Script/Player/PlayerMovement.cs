@@ -62,9 +62,8 @@ public class PlayerMovement : MonoBehaviour
         Walk(dir);
         anim.SetHorizontalMovement(x, y, rb2d.velocity.y);
 
-        if (collisionCheck.onWall && Input.GetButton("Fire3") && canMove)
-            //press fire3(Shift) to grab on wall and stop sliding down
-        {
+        if (collisionCheck.onWall && Input.GetButton("Fire3") && canMove)        
+        { //press fire3(Shift) to grab on wall and stop sliding down
             if (side != collisionCheck.wallSide)
             {
                 anim.Flip(side * -1);
@@ -102,9 +101,8 @@ public class PlayerMovement : MonoBehaviour
             rb2d.gravityScale = 3;
         }
 
-        if (collisionCheck.onWall && !collisionCheck.onGround)
-            // when on wall and not on the ground slide down
-        {
+        if (collisionCheck.onWall && !collisionCheck.onGround)      
+        { // when on wall and not on the ground slide down
             if (x != 0 && !wallGrab)
             {
                 wallSlide = true;
@@ -179,10 +177,8 @@ public class PlayerMovement : MonoBehaviour
         jumpParticle.Play();
     }
 
-    private void Dash(float x, float y)
-        /* get direcrion from horizontal and verticle axis 
-           and add it velocity to rigibody*/
-    {    
+    private void Dash(float x, float y)   
+    {     //get direcrion from horizontal and verticle axis and add it velocity to rigibody
         hasDashed = true;
 
         anim.SetTrigger("dash");
@@ -272,7 +268,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Walk(Vector2 dir)
-        //modify velocity of rigibody by getting calue of horizontal and vertical axis
+        //modify velocity of rigibody by getting value of horizontal and vertical axis
     {
         if (!canMove)
         {

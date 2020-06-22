@@ -13,7 +13,7 @@ public class EndLevel : MonoBehaviour
         GameplayUI.SetActive(true);
     }
     void OnTriggerEnter2D(Collider2D collision)
-    {
+    {//if hit by player active win screen and close game play UI
         if (collision.tag == "Player")
         {
             WinScreen.SetActive(true);
