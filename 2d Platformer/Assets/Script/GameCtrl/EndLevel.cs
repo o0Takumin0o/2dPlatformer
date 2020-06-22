@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EndLevel : MonoBehaviour
-{
+{// put in finish goal
     public GameObject WinScreen;
     public GameObject GameplayUI;
     private void Awake()

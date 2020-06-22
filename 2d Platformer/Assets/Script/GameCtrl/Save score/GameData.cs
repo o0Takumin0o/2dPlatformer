@@ -8,8 +8,9 @@ using System;
 public class GameData 
 {
 	public int pointCount;
-	public int timer;
+	// only use pointCount for now
+	/*public int timer;
 	public int level;
-	public int checkpoint;
+	public int checkpoint;*/
        
 }
